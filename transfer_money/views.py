@@ -2,11 +2,13 @@ from django.shortcuts import render,redirect
 from transfer_money.models import Account_Number, Balance, Transfer_Money
 from django.contrib.auth import get_user_model
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.db import transaction 
 
 
 User = get_user_model()
 
+@login_required(login_url="/login/")
 def home(request):
     user_obj = User.objects.get(phone_number= request.user)
     
@@ -15,7 +17,7 @@ def home(request):
             })
 
 
-
+@login_required(login_url="/login/")
 def transfer_money(request):
     from_acc_obj = request.user.accnum.first()
     user_obj=User.objects.get(phone_number=request.user)
