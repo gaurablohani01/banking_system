@@ -10,7 +10,7 @@ User = get_user_model()
 
 @login_required(login_url="/login/")
 def home(request):
-    user_obj = User.objects.get(phone_number= request.user)
+    user_obj = User.objects.get(phone_number= request.user.phone_number)
     
     return render(request, 'index.html', {
     "user_details":user_obj
@@ -20,7 +20,7 @@ def home(request):
 @login_required(login_url="/login/")
 def transfer_money(request):
     from_acc_obj = request.user.accnum.first()
-    user_obj=User.objects.get(phone_number=request.user)
+    user_obj=User.objects.get(phone_number=request.user.phone_number)
     user_obj_acc=user_obj.accnum.all()
     first_acc = user_obj_acc.first()
 
